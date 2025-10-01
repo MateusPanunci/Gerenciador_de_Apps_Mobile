@@ -4,7 +4,7 @@
 
 ### Tecnologias usadas
 
-- Java + Spring Boot no back-end.
+- Java (24) + Spring Boot (3.5.5) no back-end.
 - Thymeleaf (HTML) + Bootstrap (CSS) no front-end.
 - JPA/Hibernate + MySQL para persistência dos dados.
 - Bean Validation para a validação dos dados

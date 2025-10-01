@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt−BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF−8">
+    <title>App Mobile − Formulário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand navlogo"><strong>Gerenciador de Apps Mobile</strong></a>
+            <p th:if="${error}" th:text ="${error}" style = "text-align: right; margin-top: 20px" class = " text-danger fs-3" ></p>
+        </div>
+
+    </nav>
+
+    <div class="container-fluid" style="margin-top: 40px">
+
+        <h1 th:text="${app.id} != null ? 'Editar Informações do App' : 'Adicionar Novo App'" style = "color: #e8c382; text-align: center"></h1>
+        <div class="row">
+            <div class="col-6 mx-auto">
+                <div class="card mt-2 ">
+                    <div class="card-body bg-body-secondary">
+
+                        <!−− Formulário Novo App −−>
+                        <form th:if="${app.id} == null"
+                                th:action="@{/apps}" method="post" th:object="${app}" class="mx-auto">
+
+                            <div class = "mb-3">
+                                <label for="nome">Nome*:</label>
+                                <input th:field="*{nome}" id="nome" type="text" class="form-control" required placeholder="Insira o nome do App">
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('nome')} " th:errors="*{nome}"><span th:errors="*{nome}"> </span></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tamanho">Tamanho*:</label>
+                                <input th:field="*{tamanho}" id="tamanho" type="number" class="form-control" min="0" required placeholder="Insira um número inteiro">
+                                <label>
+                                    <select name="unidade" th:field="*{unidadeTamanho}" >
+                                        <option value="KB">KB</option>
+                                        <option value="MB" selected>MB</option>
+                                        <option value="GB">GB</option>
+                                        <option value="TB">TB</option>
+                                    </select>
+                                </label>
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('tamanho')}" th:errors="*{tamanho}"><span th:errors="*{tamanho}"> </span></div>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="Desenvolvedora">Desenvolvedora*:</label>
+                                <input th:field="*{empresaDesenvolvedora}" id="Desenvolvedora" type="text" class="form-control" required placeholder="Insira a desenvolvedora do App"  >
+                                <!-- "form control ajusta para o tamanho do conteiner pai -->
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('empresaDesenvolvedora')}" th:errors="*{empresaDesenvolvedora}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Descricao">Descrição:</label>
+                                <input th:field="*{descricao}" id="Descricao" type="text" class="form-control" placeholder="Insira uma descrição (opcional)">
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="Versao">Versão*:</label>
+                                <input th:field="*{versao}" id="Versao" type="number" step="0.01" min="0" class="form-control" required placeholder="Insira a versão do App (número decimal)">
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('versao')}" th:errors="*{versao}"></div>
+                            </div>
+
+<!--                            <!−− Erros por campo (mensagens do Bean Validation) &ndash;&gt;-->
+<!--                            <div th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>-->
+<!--                            <div th:if="${#fields.hasErrors('tamanho')}" th:errors="*{tamanho}"></div>-->
+<!--                            <div th:if="${#fields.hasErrors('empresaDesenvolvedora')}" th:errors="*{empresaDesenvolvedora}"></div>-->
+<!--                            <div th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></div>-->
+<!--                            <div th:if="${#fields.hasErrors('versao')}" th:errors="*{versao}"></div>-->
+
+                            <div class="mb-3">
+                                <div class="small">
+                                    <p class="form-text">* Campos obrigatórios</p>
+                                </div>
+                            </div>
+
+                            <div class="d-flex">
+                                <a th:href="@{/apps}" class="btn btn-danger">Cancelar</a>
+
+                                <div class="d-flex gap-3 ms-auto ">
+                                    <button type="reset" class = "sm-5 btn btn-outline-info">Limpar Campos</button>
+                                    <button type="submit" class = "sm-5 btn btn-personalizado">Cadastrar</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+
+                        <!−− Formulário Editar App -->
+                        <form th:if="${app.id} != null"
+                              th:action="@{/apps/{id}(id=${app.id})}" method="post" th:object="${app}" class="mx-auto">
+
+                            <input type="hidden" name="_method" value="put"/>
+
+                            <div class="mb-3">
+                                <label for="nomeEdit">Nome*:</label>
+                                <input th:field="*{nome}" id="nomeEdit" type="text" class="form-control" required placeholder="Insira o nome do App">
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tamanhoEdit">Tamanho*:</label>
+                                <input th:field="*{tamanho}" id="tamanhoEdit" type="number" class="form-control" required placeholder="Insira um número inteiro">
+                                <label>
+                                    <select name="unidade" th:field="*{unidadeTamanho}" >
+                                        <option value="KB">KB</option>
+                                        <option value="MB" selected>MB</option>
+                                        <option value="GB">GB</option>
+                                        <option value="TB">TB</option>
+                                    </select>
+                                </label>
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('tamanho')}" th:errors="*{tamanho}"></div>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="DesenvolvedoraEdit">Desenvolvedora*:</label>
+                                <input th:field="*{empresaDesenvolvedora}" id="DesenvolvedoraEdit" type="text" class="form-control" placeholder="Insira a desenvolvedora do App" >
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('empresaDesenvolvedora')}" th:errors="*{empresaDesenvolvedora}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="DescricaoEdit">Descrição:</label>
+                                <input th:field="*{descricao}" id="DescricaoEdit" type="text" class="form-control" placeholder="Insira uma descrição do App (opcional)">
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="VersaoEdit">Versão*:</label>
+                                <input th:field="*{versao}" id="VersaoEdit" type="number" step="0.01" min="0" class="form-control" required placeholder="Insira a versão do App (número decimal)">
+                                <div class="text-danger small"
+                                     th:if="${#fields.hasErrors('versao')}" th:errors="*{versao}"></div>
+                            </div>
+
+                            <!−− Erros por campo (mensagens do Bean Validation) −−>
+
+<!--                            <div th:if="${#fields.hasErrors('tamanho')}" th:errors="*{tamanho}"></div>-->
+<!--                            <div th:if="${#fields.hasErrors('empresaDesenvolvedora')}" th:errors="*{empresaDesenvolvedora}"></div>-->
+<!--                            <div th:if="${#fields.hasErrors('descricao')}" th:errors="*{descricao}"></div>-->
+<!--                            <div th:if="${#fields.hasErrors('versao')}" th:errors="*{versao}"></div>-->
+
+                            <div class="mb-3">
+                                <div class="small">
+                                    <p class="form-text">* Campos obrigatórios</p>
+                                </div>
+                            </div>
+
+
+                            <div class="d-flex">
+                                <a th:href="@{/apps}" class="btn btn-danger">Cancelar</a>
+
+                                <div class="d-flex gap-3 ms-auto ">
+                                    <button type="submit" class = "sm-5 btn btn-personalizado">Atualizar</button>
+                                </div>
+                            </div>
+<!--                            <button type="submit" class="btn btn-sm btn-primary me-1">> Atualizar </button>-->
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

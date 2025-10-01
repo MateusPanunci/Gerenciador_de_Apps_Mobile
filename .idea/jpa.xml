@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PersistenceUnitSettings">
+    <persistence-units>
+      <persistence-unit moduleName="Apps_Mobile" name="Apps_Mobile" framework="JPA" ormUnit="Apps_Mobile:Apps_Mobile" defaultDataSourceId="0444258a-ef7f-485f-aa94-96aa3dd4ee73" />
+    </persistence-units>
+  </component>
+</project>

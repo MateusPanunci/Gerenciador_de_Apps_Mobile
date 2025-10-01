@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt−BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF−8">
+    <title>App Mobile − Formulário</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/estilos.css}">
+</head>
+<body>
+
+    <nav class="navbar navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand navlogo" ><strong>Gerenciador de Apps Mobile</strong></a>
+
+            <!--Mensagem de sucesso -->
+            <p th:if="${msg}" th:text ="${msg}" class = "m-auto fs-3"
+               style ="color: #3c9730" ></p>
+            <p th:if="${buscainvalida}" th:text ="${buscainvalida}" class = "m-auto text-danger fs-3" ></p>
+
+
+            <form class="d-flex"  role="search" method="get" th:action="@{/apps/buscar}">
+                <input class="form-control me-2"  style = "width: 240px" name="nome"  type="search" placeholder="Buscar por nome do App" aria-label="Search"/>
+                <button class="btn btn-outline-success" type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg> <!-- Lupa -->
+                </button>
+            </form>
+
+        </div>
+    </nav>
+
+    <div class="container-fluid" style="margin-top: 100px">
+
+        <div class="row">
+            <div class="col-8 mx-auto">
+
+                <!--Texto acima do card e botão adicionar-->
+                <div class="d-flex">
+                    <h3 style ="color: #e8c382" class = "justify-content-start"> APP encontrado </h3>
+                </div>
+
+                <div class="card mt-2 mb-4">
+                    <div class="card-body bg-body-secondary">
+
+                        <!-- Tabela -->
+                        <div class="table-responsive">
+                            <table class = "table table-sm align-middle">
+                                <thead>
+                                <tr>
+                                    <th scope = "col">Nome</th>
+                                    <th scope = "col">Tamanho</th>
+                                    <th scope = "col">Desenvolvedora</th>
+                                    <th scope = "col">Descricao</th>
+                                    <th scope = "col">Versao</th>
+                                    <th scope = "col">Ações</th>
+                                </tr>
+                                </thead>
+
+                                <tbody class="table-group-divider">
+                                    <!-- Se o usuário realizar a busca na Navbar -->
+                                    <tr th:if="${appBuscado}">
+                                        <td th:text="${appBuscado.nome}"></td>
+                                        <td th:text="${appBuscado.tamanho} + ${appBuscado.unidadeTamanho}" ></td>
+                                        <td th:text="${appBuscado.empresaDesenvolvedora}"></td>
+                                        <td th:text="${appBuscado.descricao}"></td>
+                                        <td th:text="${appBuscado.versao}"></td>
+                                        <td>
+                                            <a th:href="@{/apps/editar/{id}(id=${appBuscado.id})}"
+                                               class="btn btn-sm me-1"
+                                               style = "background-color:#16213e; color: #ffffff">
+                                                Editar
+                                            </a>
+
+                                            <button type="button" class="btn btn-sm btn-danger"
+                                                    style = "background-color:#870d0d; color: #ffffff"
+                                                    data-bs-toggle="modal"
+                                                    th:data-bs-target="|#confirmarExclusao-${appBuscado.id}|">
+                                                    <!-- Tem que deixar o # -->
+                                                <i class="bi bi-trash"></i> Excluir
+                                            </button>
+
+                                            <!-- Modal de Confirmação -->
+                                            <div class="modal fade"
+                                                 th:id="|confirmarExclusao-${appBuscado.id}|"
+                                                 tabindex="-1"
+                                                 aria-labelledby="modalLabelSearch"
+                                                 aria-hidden="true">
+
+                                                <div class="modal-dialog modal-dialog-centered">
+                                                    <div class="modal-content">
+
+                                                        <div class="modal-header bg-danger text-white">
+                                                            <h5 class="modal-title" id="modalLabelSearch">Confirmar Exclusão</h5>
+                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                                        </div>
+
+                                                        <div class="modal-body">
+                                                            <p>Tem certeza que deseja excluir o item abaixo?</p>
+                                                            <p class="mb-0">
+                                                                <strong class="text-danger">NOME:</strong> <span th:text="${appBuscado.nome}">123</span>
+                                                            </p>
+                                                        </div>
+
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                                Cancelar
+                                                            </button>
+
+                                                            <!-- Formulário de exclusão dentro do modal -->
+                                                            <form th:action="@{/apps/{id}(id=${appBuscado.id})}" method="post" class="d-inline">
+                                                                <input type="hidden" name="_method" value="delete"/>
+                                                                <button type="submit" class="btn btn-danger">Excluir</button>
+                                                            </form>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Botão de adicionar novo App -->
+                        <a th:href="@{/apps}" class="btn btn-personalizado">
+                            Voltar à lista de APPS
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

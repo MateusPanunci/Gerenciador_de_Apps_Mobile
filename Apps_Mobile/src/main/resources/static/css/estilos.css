@@ -1,0 +1,64 @@
+/* estilos.css */
+
+ body {
+     /*background: radial-gradient(ellipse, #1a1a2e, #16213e, #0f3460, #000000);*/
+     /*color: white; !* Para o texto ficar visível *!*/
+     margin: 0px;
+     height: 100vh; /* Altura igual à altura total da viewport */
+     width: 100%; /* Altura igual à altura total da viewport */
+     background: linear-gradient(to bottom, #1a1a2e, #16213e, #0f3460, #000000);
+ }
+
+
+
+table{
+    margin: auto;
+    border-color: #450A0A;
+    border-width: medium;
+    width: 50px;
+}
+th{
+    text-align: center;
+    background-color: #D8C8EC;
+}
+
+td{
+    text-align: center;
+    background-color: #D8C8EC ;
+}
+
+/* estilos.css */
+
+.btn-personalizado {
+    /* 1. Cor principal do botão */
+    background-color: #450099; /* Exemplo: um Roxo Escuro (Slate Blue) */
+    color: white; /* Cor do texto (mantenha branco ou claro) */
+}
+
+.btn-personalizado:hover {
+    /* 2. Cor quando o mouse passa (efeito hover) */
+    background-color: #483D8B; /* Exemplo: um Roxo ainda mais escuro */
+    color: white;
+}
+
+/*Chrome*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/*firefox*/
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.navlogo{
+    background-color: #965f13;
+    border: #450099;
+    border-radius: 15px;
+    padding: 8px;
+    color: #ffffff;
+    font-family: Times New Roman, Times, serif;"
+}
+

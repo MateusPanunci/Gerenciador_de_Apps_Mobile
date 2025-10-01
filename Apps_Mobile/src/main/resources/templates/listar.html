@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt−BR" xmlns:th= "http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!DOCTYPE html>
+
+    <title>Apps − Lista</title>
+</head>
+<body>
+    <h1>Apps</h1>
+
+    <!--Mensagem de sucesso -->
+    <p th:if="${msg}" th:text ="${msg}"></p>
+
+    <p><a th:href="@{/apps/novo}">Novo App Mobile</a></p>
+
+    <table>
+        <tr>
+            <th>Nome</th>
+            <th>Tamanho</th>
+            <th>Desenvolvedora</th>
+            <th>Descricao</th>
+            <th>Versao</th>
+            <th>Ações</th>
+        </tr>
+        <tr th:each="ap : ${appsMobile}">
+            <td th:text="${ap.nome}"></td>
+            <td th:text="${ap.tamanho}"></td>
+            <td th:text="${ap.empresaDesenvolvedora}"></td>
+            <td th:text="${ap.descricao}"></td>
+            <td th:text="${ap.versao}"></td>
+            <td>
+                <form th:action="@{/apps/editar/{id}(id=${ap.id})}" method="get">
+                    <button type="submit">Editar</button>
+                </form>
+                <form th:action="@{/apps/{id}(id=${ap.id})}" method="post">
+                    <input type="hidden" name=" method" value="delete"/>
+                    <button type="submit">Excluir</button>
+                </form>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

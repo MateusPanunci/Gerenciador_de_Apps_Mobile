@@ -36,7 +36,7 @@ public class AppMobile {
 
     public String descricao;
 
-    @Positive(message = "Número peve ser positivo!")
+    @Positive(message = "Número deve ser positivo!")
     @NotNull(message = "A versão do App deve ser informada!")
     public float versao;
 

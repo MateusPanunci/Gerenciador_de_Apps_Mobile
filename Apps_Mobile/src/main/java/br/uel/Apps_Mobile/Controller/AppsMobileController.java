@@ -57,6 +57,9 @@ public class AppsMobileController {
         } catch (RuntimeException e){
             ra.addFlashAttribute("error", e.getMessage());
             return "redirect:/apps";
+            /* Maneira que encontrei para burlar o problema de não mostrar o erro pelo
+            Binding Results
+            */
         }
     }
 
@@ -119,6 +122,7 @@ public class AppsMobileController {
         }
         catch (RuntimeException e) {
             ra.addFlashAttribute("error", e.getMessage());
+            //Ver para que serve
         }
         return "redirect:/apps";
     }

@@ -9,15 +9,18 @@
 <body>
 
     <nav class="navbar navbar-dark">
-        <div class="container-fluid">
+        <div class="container-fluid"> <!-- Navbar vai de uma ponta até a outra da tela-->
+
             <a class="navbar-brand navlogo" ><strong>Gerenciador de Apps Mobile</strong></a>
 
             <!--Mensagem de sucesso -->
             <p th:if="${msg}" th:text ="${msg}" class = "m-auto fs-3"
                style ="color: #3c9730" ></p>
-            <p th:if="${buscainvalida}" th:text ="${buscainvalida}" class = "m-auto text-danger fs-3" ></p>
 
+            <!-- Mensagem de erro na busca -->
+            <!-- <p th:if="${buscainvalida}" th:text ="${buscainvalida}" class = "m-auto text-danger fs-3" ></p>-->
 
+            <!-- Barra de pesquisa -->
             <form class="d-flex"  role="search" method="get" th:action="@{/apps/buscar}">
                 <input class="form-control me-2"  style = "width: 240px" name="nome"  type="search" placeholder="Buscar por nome do App" aria-label="Search"/>
                 <button class="btn btn-outline-success" type="submit">
@@ -28,10 +31,12 @@
             </form>
 
         </div>
-    </nav>
+    </nav> <!-- Fecha o bloco de código da NavBar -->
 
+    <!--Conteiner que ocupa toda a largura da tela-->
     <div class="container-fluid" style="margin-top: 100px">
 
+        <!--Bloco de linha com 8 colunas de grid-->
         <div class="row">
             <div class="col-8 mx-auto">
 
@@ -40,12 +45,15 @@
                     <h3 style ="color: #e8c382" class = "justify-content-start"> APP encontrado </h3>
                 </div>
 
+                <!-- Card e estilo dele-->
                 <div class="card mt-2 mb-4">
                     <div class="card-body bg-body-secondary">
 
                         <!-- Tabela -->
                         <div class="table-responsive">
                             <table class = "table table-sm align-middle">
+
+                                <!-- Cabeçalho da tabela -->
                                 <thead>
                                 <tr>
                                     <th scope = "col">Nome</th>
@@ -57,7 +65,9 @@
                                 </tr>
                                 </thead>
 
+                                <!-- Corpo de dados da tabela -->
                                 <tbody class="table-group-divider">
+
                                     <!-- Se o usuário realizar a busca na Navbar -->
                                     <tr th:if="${appBuscado}">
                                         <td th:text="${appBuscado.nome}"></td>
@@ -72,11 +82,13 @@
                                                 Editar
                                             </a>
 
+                                            <!-- Botão de excluir que ativo o modal -->
                                             <button type="button" class="btn btn-sm btn-danger"
                                                     style = "background-color:#870d0d; color: #ffffff"
                                                     data-bs-toggle="modal"
                                                     th:data-bs-target="|#confirmarExclusao-${appBuscado.id}|">
                                                     <!-- Tem que deixar o # -->
+
                                                 <i class="bi bi-trash"></i> Excluir
                                             </button>
 
@@ -116,13 +128,15 @@
 
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div> <!-- Fecha o bloco de código do modal-->
+
 
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> <!-- Fecha o bloco de código da tabela-->
+
 
                         <!-- Botão de adicionar novo App -->
                         <a th:href="@{/apps}" class="btn btn-personalizado">
@@ -133,8 +147,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> <!-- Fecha o bloco de código do container que possui a largura total de tela -->
 
+    <!-- Script do Js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </body>
 </html>

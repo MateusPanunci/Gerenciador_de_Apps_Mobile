@@ -35,6 +35,12 @@ td{
     color: white; /* Cor do texto (mantenha branco ou claro) */
 }
 
+.btn-rstpersonalizado {
+    /* 1. Cor principal do botão */
+    background-color: #16213e; /* Exemplo: um Roxo Escuro (Slate Blue) */
+    color: white; /* Cor do texto (mantenha branco ou claro) */
+}
+
 .btn-personalizado:hover {
     /* 2. Cor quando o mouse passa (efeito hover) */
     background-color: #483D8B; /* Exemplo: um Roxo ainda mais escuro */

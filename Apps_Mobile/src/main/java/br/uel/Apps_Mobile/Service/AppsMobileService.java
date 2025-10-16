@@ -24,8 +24,9 @@ public class AppsMobileService {
     }
 
     //Usado para pesquisar o nome da aplicação na NavBar
-    public AppMobile buscar(String nome) {
-        return repository.findByNome(nome).orElseThrow(() -> new RuntimeException("App não encontrado com o nome " + nome));
+    public List<AppMobile> buscarPorNome(String nome) {
+        //return repository.findByNome(nome).orElseThrow(() -> new RuntimeException("App não encontrado com o nome " + nome));
+        return repository.findByNomeContainingIgnoreCase(nome, Sort.by("nome").ascending());
     }
 
     public void adicionar(AppMobile app) {

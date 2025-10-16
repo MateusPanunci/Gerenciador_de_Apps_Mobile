@@ -26,7 +26,7 @@
             <p th:if="${buscainvalida}" th:text ="${buscainvalida}" class = "m-auto text-danger fs-3" ></p>
 
             <!-- Barra de pesquisa -->
-            <form class="d-flex"  role="search" method="get" th:action="@{/apps/buscar}">
+            <form class="d-flex"  role="search" method="get" th:action="@{/templates/logado/buscar}">
                 <input class="form-control me-2"  style = "width: 240px" name="nome"  type="search" placeholder="Buscar por nome do App" aria-label="Search"/>
                 <button class="btn btn-outline-success" type="submit">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -50,7 +50,7 @@
                     <h3 style ="color: #e8c382" class = "justify-content-start"> Lista de Apps Mobile </h3>
 
                     <!-- Botão de adicionar novo App -->
-                    <a th:href="@{/apps/novo}" class="btn btn-personalizado ms-auto">
+                    <a th:href="@{/templates/logado/novo}" class="btn btn-personalizado ms-auto">
                         Adicionar App Mobile
                     </a>
                 </div>
@@ -83,7 +83,7 @@
                                         <td th:text="${app.descricao}"></td>
                                         <td th:text="${app.versao}"></td>
                                         <td>
-                                            <a th:href="@{/apps/editar/{id}(id=${app.id})}"
+                                            <a th:href="@{/templates/logado/editar/{id}(id=${app.id})}"
                                                class="btn btn-sm me-1"
                                                 style = "background-color:#16213e; color: #ffffff">
                                                 Editar
@@ -124,7 +124,7 @@
                                                             </button>
 
                                                             <!-- Formulário de exclusão dentro do modal -->
-                                                            <form th:action="@{/apps/{id}(id=${app.id})}" method="post" class="d-inline">
+                                                            <form th:action="@{/templates/logado/{id}(id=${app.id})}" method="post" class="d-inline">
                                                                 <input type="hidden" name="_method" value="delete"/>
                                                                 <button type="submit" class="btn btn-danger">Excluir</button>
                                                             </form>

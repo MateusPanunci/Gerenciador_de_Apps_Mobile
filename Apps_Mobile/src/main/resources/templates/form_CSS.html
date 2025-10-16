@@ -35,7 +35,7 @@
 
                         <!-- Formulário Novo App -->
                         <form th:if="${app.id} == null"
-                                th:action="@{/apps}" method="post" th:object="${app}" class="mx-auto">
+                              th:action="@{/templates/logado}" method="post" th:object="${app}" class="mx-auto">
 
                             <div class = "mb-3">
                                 <label for="nome">Nome*:</label>
@@ -99,10 +99,10 @@
 
 
                             <div class="d-flex">
-                                <a th:href="@{/apps}" class="btn btn-danger">Cancelar</a>
+                                <a th:href="@{/templates/logado}" class="btn btn-danger">Cancelar</a>
 
                                 <div class="d-flex gap-3 ms-auto ">
-                                    <button type="reset" class = "sm-5 btn btn-outline-info">Limpar Campos</button>
+                                    <button type="reset" class = "sm-5 btn btn-rstpersonalizado">Limpar Campos</button>
                                     <button type="submit" class = "sm-5 btn btn-personalizado">Cadastrar</button>
                                 </div>
                             </div>
@@ -112,7 +112,7 @@
 
                         <!--Formulário Editar App -->
                         <form th:if="${app.id} != null"
-                              th:action="@{/apps/{id}(id=${app.id})}" method="post" th:object="${app}" class="mx-auto">
+                              th:action="@{/templates/logado/{id}(id=${app.id})}" method="post" th:object="${app}" class="mx-auto">
 
                             <input type="hidden" name="_method" value="put"/>
 
@@ -177,7 +177,7 @@
 
 
                             <div class="d-flex">
-                                <a th:href="@{/apps}" class="btn btn-danger">Cancelar</a>
+                                <a th:href="@{/templates/logado}" class="btn btn-danger">Cancelar</a>
 
 
                                 <div class="d-flex gap-3 ms-auto ">

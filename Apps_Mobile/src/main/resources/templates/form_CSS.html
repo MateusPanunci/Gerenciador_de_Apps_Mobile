@@ -35,7 +35,7 @@
 
                         <!-- Formulário Novo App -->
                         <form th:if="${app.id} == null"
-                              th:action="@{/templates/logado}" method="post" th:object="${app}" class="mx-auto">
+                              th:action="@{/apps}" method="post" th:object="${app}" class="mx-auto">
 
                             <div class = "mb-3">
                                 <label for="nome">Nome*:</label>
@@ -99,7 +99,7 @@
 
 
                             <div class="d-flex">
-                                <a th:href="@{/templates/logado}" class="btn btn-danger">Cancelar</a>
+                                <a th:href="@{/apps}" class="btn btn-danger">Cancelar</a>
 
                                 <div class="d-flex gap-3 ms-auto ">
                                     <button type="reset" class = "sm-5 btn btn-rstpersonalizado">Limpar Campos</button>
@@ -177,7 +177,7 @@
 
 
                             <div class="d-flex">
-                                <a th:href="@{/templates/logado}" class="btn btn-danger">Cancelar</a>
+                                <a th:href="@{/apps}" class="btn btn-danger">Cancelar</a>
 
 
                                 <div class="d-flex gap-3 ms-auto ">

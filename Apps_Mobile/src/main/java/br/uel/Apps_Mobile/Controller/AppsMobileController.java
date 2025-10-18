@@ -39,13 +39,13 @@ public class AppsMobileController {
             apps = service.listar();
         }
         System.out.println(apps);
-        model.addAttribute("apps", apps);
+        model.addAttribute("appsMobile", apps);
         return "listar_CSS_Filtro"; //"listar"
     }
 
     @GetMapping("/limpar")
     public String limparFiltro(HttpSession session) {
-        session.invalidate();
+        session.setAttribute("filtro", null);;
         return "redirect:/apps";
     }
 //    @GetMapping("/buscar")

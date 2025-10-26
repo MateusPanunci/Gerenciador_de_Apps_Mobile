@@ -27,19 +27,21 @@ public class UsuarioController {
             return "index";
         }
 
-    @PostMapping("/cadastro")
-    public String autenticar(@RequestParam String nome, @RequestParam String email, @RequestParam String senha, HttpSession session, Model model) {
-        Usuario usuario = usuarioService.autenticar(email, senha);
-
-        if (usuario != null) {
-            session.setAttribute("usuarioexiste", "Usuário Já Existe!");
-            return "redirect:/";
-        } else {
-            Usuario novo = Usuario
-            model.addAttribute("error", "E-mail ou senha inválidos!");
-            return "redirect:/";
-        }
     }
+
+    // @PostMapping("/cadastro")
+    // public String autenticar(@RequestParam String nome, @RequestParam String email, @RequestParam String senha, HttpSession session, Model model) {
+    //     Usuario usuario = usuarioService.autenticar(email, senha);
+
+    //     if (usuario != null) {
+    //         session.setAttribute("usuarioexiste", "Usuário Já Existe!");
+    //         return "redirect:/";
+    //     } else {
+    //         Usuario novo = Usuario
+    //         model.addAttribute("error", "E-mail ou senha inválidos!");
+    //         return "redirect:/";
+    //     }
+    // }
 
 
 

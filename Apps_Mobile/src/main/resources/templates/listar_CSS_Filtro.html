@@ -2,64 +2,154 @@
 <html lang="pt−BR" xmlns:th= "http://www.thymeleaf.org">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF−8" http-equiv="refresh" content="10">
     <title>Title</title>
     <!DOCTYPE html>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Segue o estilo defino no arquivo css -->
     <link rel="stylesheet" th:href="@{/css/estilos.css}">
     <title>Lista de APPS Mobile</title>
+
 </head>
 <body>
+    <!-- Navbar vai de uma ponta até a outra da tela automaticamente-->
+    <nav class="navbar navbar-expand-lg " style="border-color:#965f13; border-bottom: 50px ">
+        <div class="container-fluid d-flex justify-content-between"> <!-- Adiciona um pequeno paddding nas laterais-->
+            <p class="navbar-brand navlogo" ><strong>Gerenciador de Apps Mobile</strong></p>
 
-    <nav class="navbar navbar-dark">
-        <div class="container-fluid"> <!-- Navbar vai de uma ponta até a outra da tela-->
+            <div th:if="${session.usuarioLogado != null}" class="mx-auto" style="font-size: 24px; padding-left:100px">
+                <span style="color:#965f13; font-family: 'Comic Sans MS', serif">
+                    Usuário: <strong style="color:white" th:text="${session.usuarioLogado.nome}"></strong>
+                </span>
 
-            <a class="navbar-brand navlogo" ><strong>Gerenciador de Apps Mobile</strong></a>
+            </div>
 
-            <!--Mensagem de sucesso -->
-            <p th:if="${msg}" th:text ="${msg}" class = "m-auto fs-3"
-               style ="color: #3c9730" ></p>
+            <!-- Botão de adicionar novo App -->
+            <a th:href="@{/apps/novo}" class="btn btn-personalizado me-3">
+                Adicionar App Mobile
+            </a>
 
-            <!--Mensagem de busca inválida -->
-            <p th:if="${buscainvalida}" th:text ="${buscainvalida}" class = "m-auto text-danger fs-3" ></p>
+            <button class="btn text-white me-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" style="background-color:#D7902D">
+                Procurar App
+            </button>
 
-            <!-- Barra de pesquisa -->
-            <form class="d-flex"  role="search" method="get" th:action="@{/apps/buscar}">
-                <input class="form-control me-2"  style = "width: 240px" name="nome"  type="search" placeholder="Buscar por nome do App" aria-label="Search"/>
-                <button class="btn btn-outline-success" type="submit">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                    </svg> <!-- Lupa -->
-               </button>
+            <form th:action="@{/apps/logout}" method="get">
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </button>
             </form>
+
+
+<!--            &lt;!&ndash; Botão de Logout &ndash;&gt;-->
+<!--            <form th:action="@{/logout}" method="get" style = "margin-left: 12px">-->
+<!--                <button type="submit" class="btn btn-outline-primary btn-sm">-->
+<!--                    <i class="bi bi-box-arrow-right"></i> Sair-->
+<!--                </button>-->
+<!--            </form>-->
+
+
+
+<!--            <ul class="navbar-nav">-->
+<!--                <li class="nav-item active">-->
+<!--                    <a class="nav-link" th:action="@{/apps/novo}" style = "color:white">Add App</a>-->
+<!--                </li>-->
+<!--            </ul>-->
+
+<!--            &lt;!&ndash; Barra de pesquisa &ndash;&gt;-->
+<!--            <form class="d-flex me-0 flex-shrink-0" method="post" th:action="@{/apps/filtro}"> &lt;!&ndash; Align-items ajusta todos os itens do form para o centro &ndash;&gt;-->
+<!--                <input class="form-control me-2"  style = "width: 280px" name="nome"  type="search" placeholder="Buscar por nome do App" aria-label="Search"/>-->
+<!--                <button class="btn btn-outline-success" type="submit">-->
+<!--                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">-->
+<!--                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>-->
+<!--                    </svg> &lt;!&ndash; Lupa &ndash;&gt;-->
+<!--                </button>-->
+<!--            </form>-->
+
+
+
+            <!-- Exibe apenas se o usuário estiver logado -->
 
         </div>
     </nav> <!-- Fecha o bloco de código da NavBar -->
 
+<!--    Barra Lateral -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" style="background-color: #C18026">
+
+        <div class="offcanvas-header">
+            <h3 class="offcanvas-title" id="offcanvasExampleLabel"><strong>Barra de Pesquisa</strong></h3>
+
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+
+        <div class="offcanvas-body">
+            <form class="d-flex mt-1" method="post" th:action="@{/apps/filtro}"> <!-- Align-items ajusta todos os itens do form para o centro -->
+                <input class="form-control" style = "width: 320px" name="nome" type="search" placeholder="Buscar por nome do App" aria-label="Search"/>
+                <button class="btn btn-outline-success ms-2 " type="submit">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                    </svg> <!-- Lupa -->
+                </button>
+            </form>
+        </div>
+
+        <!-- &lt;!&ndash;Mensagem de sucesso &ndash;&gt;-->
+
+        <!-- <p th:if="${msg}" th:text ="${msg}" class = "m-auto fs-3"-->
+
+        <!-- style ="color: #3c9730" ></p>-->>
+    </div>
+
+
+
     <!--Conteiner que ocupa toda a largura da tela-->
     <div class="container-fluid" style="margin-top: 50px ">
+
 
         <!--Bloco de linha com 8 colunas de grid-->
         <div class="row">
             <div class="col-8 mx-auto">
 
+
                 <!--Texto acima do card e botão adicionar-->
-                <div class="d-flex">
-                    <h3 style ="color: #e8c382" class = "justify-content-start"> Lista de Apps Mobile </h3>
+                <div class="d-fle position-relative">
+                    <h3 th:if="${session.filtro == null}" style ="color: #e8c382" class = "justify-content-start"> Lista de Apps Mobile </h3>
 
-                    <!-- Botão de adicionar novo App -->
-                    <a th:href="@{/apps/novo}" class="btn btn-personalizado ms-auto">
-                        Adicionar App Mobile
-                    </a>
+                    <!-- Botão de Limpar Filtro -->
+                    <h4 th:if="${session.filtro != null}" style = "color: #e8c382 " class = "justify-content-start mb-1">
+                        Filtro ativo: <strong th:text="${session.filtro}" style = "color:white"></strong>
+                        <a th:href="@{/apps/limpar}" class="btn btn-sm btn-outline-warning" style = "margin-left: 10px">
+                            Limpar
+                        </a>
+                    </h4>
+
+                    <!-- Mensagem de edição ou cadastramento bem-sucedido -->
+                    <div th:if="${msg}" class="alert alert-success alert-dismissible fade show position-absolute" role="alert">
+                        <span th:text="${msg}">mensagem</span> <!-- Troca o valor de mensagem -->
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" ></button>
+                    </div>
+
+                    <!-- Quando busca.html é usado (o que não é o caso) -->
+                    <!-- Mensagem de busca inválida -->
+                    <p th:if="${buscainvalida}" th:text ="${buscainvalida}" class = "m-auto text-danger fs-3" ></p>
+
                 </div>
+                <!-- Fecha texto acima do Card -->
 
+
+                <!-- Card onde fica a tabela -->
                 <div class="card mt-2 mb-4">
                     <div class="card-body">
+                        <!-- Mensagem se não houver resultados -->
+                        <div th:if="${#lists.isEmpty(appsMobile) and session.filtro != null}" class=" m-auto alert alert-info" style="color:#16213e" role="alert">
+                            Não foram encontrados Apps.
+                        </div>
 
                         <!-- Tabela -->
-                        <div class="table-responsive">
+                        <div th:if= "${not #lists.isEmpty(appsMobile)}" class="table-responsive">
                             <table class = "table table-sm align-middle">
 
                                 <!--Cabeçalho da tabela-->

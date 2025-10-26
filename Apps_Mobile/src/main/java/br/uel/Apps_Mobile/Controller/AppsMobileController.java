@@ -2,6 +2,7 @@ package br.uel.Apps_Mobile.Controller;
 
 import br.uel.Apps_Mobile.Model.AppMobile;
 import br.uel.Apps_Mobile.Service.AppsMobileService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -11,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.List;
 
 
 @Controller
@@ -25,21 +28,42 @@ public class AppsMobileController {
 
 
     @GetMapping
-    public String listar(Model model){
-        model.addAttribute("appsMobile", service.listar());
-        return "listar_CSS"; //"listar"
+    public String listar(HttpSession session, Model model){
+        String nome = (String) session.getAttribute("filtro");
+        System.out.println(nome);
+
+        List<AppMobile> apps;
+        if (nome != null && !nome.isEmpty()) {
+            apps = service.buscarPorNome(nome);
+        } else {
+            apps = service.listar();
+        }
+        System.out.println(apps);
+        model.addAttribute("appsMobile", apps);
+        return "listar_CSS_Filtro"; //"listar"
     }
 
-    @GetMapping("/buscar")
-    public String buscar(@RequestParam("nome") String nome, Model model, RedirectAttributes ra){
-        try {
-            model.addAttribute("appBuscado", service.buscar(nome));
-            return "busca";
-        }
-        catch(RuntimeException e){
-            ra.addFlashAttribute("buscainvalida", e.getLocalizedMessage());
-            return "redirect:/apps";
-        }
+    @GetMapping("/limpar")
+    public String limparFiltro(HttpSession session) {
+        session.setAttribute("filtro", null);;
+        return "redirect:/apps";
+    }
+//    @GetMapping("/buscar")
+//    public String buscar(@RequestParam("nome") String nome, Model model, RedirectAttributes ra){
+//        try {
+//            model.addAttribute("appBuscado", service.buscar(nome));
+//            return "busca";
+//        }
+//        catch(RuntimeException e){
+//            ra.addFlashAttribute("buscainvalida", e.getLocalizedMessage());
+//            return "redirect:/apps";
+//        }
+//    }
+
+    @PostMapping("/filtro")
+    public String aplicarFiltro(@RequestParam("nome") String nome, HttpSession session){
+          session.setAttribute("filtro", nome);
+          return "redirect:/apps";
     }
 
 

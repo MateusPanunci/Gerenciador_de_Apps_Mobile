@@ -6,7 +6,7 @@ CREATE TABLE Apps(
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR (100) NOT NULL unique,
     tamanho bigint NOT NULL,
-	unidade_tamanho NOT NULL,
+	unidade_tamanho VARCHAR(2) NOT NULL,
     descricao TEXT NOT NULL,
     empresa_desenvolvedora VARCHAR(100),
     versao DECIMAL
